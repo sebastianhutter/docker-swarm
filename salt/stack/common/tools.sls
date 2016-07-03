@@ -6,3 +6,4 @@ install-tools:
         - parted
         - apt-transport-https 
         - ca-certificates
+        - unzip
