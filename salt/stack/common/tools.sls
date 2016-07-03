@@ -4,3 +4,5 @@ install-tools:
     - pkgs:
         - vim
         - parted
+        - apt-transport-https 
+        - ca-certificates
