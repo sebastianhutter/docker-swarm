@@ -2,3 +2,6 @@
 roles:
   - gluster
   - consul-bootstrap
+
+consul:
+  shows_ui: True
