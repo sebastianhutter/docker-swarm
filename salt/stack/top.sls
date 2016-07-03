@@ -1,6 +1,7 @@
 base:
   '*':
     - common
+    - consul
     
   'G@roles:gluster':
     - gluster
