@@ -1,0 +1,46 @@
+{# import all variables from a central location -#}
+{% import "consul/variables.jinja" as vars -%}
+{
+  "services": [
+  {% for s in vars.consul_services -%}
+    {# get necessary values form the dict
+      and set defaults so the script wont fail is
+      not all parametera are set #}
+    {% set id = s.id|default('') -%}
+    {% set name = s.name|default('') -%}
+    {% set address = s.address|default('') -%}
+    {% set port = s.port|default('') -%}
+    {% set tags = s.tags|default([]) -%}
+    {% set checks = s.checks|default([]) -%}
+    {# ############# #}
+    {
+      {{ '"id": "%s",' % id if id else '' }}
+      {{ '"name": "%s",' % name if name else '' }}
+      {{ '"address": "%s",' % address if address else '' }}
+      {{ '"port": %i,' % port if port else '' }}
+      "tags": [
+      {% for t in tags -%}
+        {{ '"%s"' % t if loop.last else '"%s",' % t }}
+      {% endfor %}
+      ],
+      "checks": [
+      {% for c in s.checks -%}
+        {
+          {# get necessary values form the dict
+            and set defaults so the script wont fail is
+            not all parametera are set #}
+          {% set type = c.type|default('') -%}
+          {% set target = c.target|default('') -%}
+          {% set interval = c.interval|default('') -%}
+          {% set ttl = c.ttl|default('') -%}
+          {# ############# #}
+          {{ '"ttl": "%s",' % ttl if ttl else '' }}
+          {{ '"interval": "%s",' % interval if interval else '' }}
+          {{ '"%s": "%s"' % (type, target) if type and target else '' }}
+        {{ '}' if loop.last else '},' }}
+      {% endfor %}
+      ]
+    {{ '}' if loop.last else '},' }}
+  {% endfor -%}
+  ]
+}

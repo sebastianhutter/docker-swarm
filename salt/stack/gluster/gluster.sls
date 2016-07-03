@@ -9,8 +9,6 @@ gluster peer probe {{p}}:
 {% endif %}
 {% endfor %}
 
-# create volume
-
 # first lets create the brick directories
 "{{vars.gluster_volume_directory}}/{{vars.gluster_volume_name}}/brick":
   file.directory:

@@ -11,6 +11,7 @@ gluster-repo:
   pkgrepo.managed:
     - humanname: Gluster Debian Repository
     - name: deb http://download.gluster.org/pub/gluster/glusterfs/LATEST/Debian/jessie/apt jessie main
+    - file: /etc/apt/sources.list.d/gluster.list
     - dist: jessie
     - require:
       - cmd: gluster-repo-key

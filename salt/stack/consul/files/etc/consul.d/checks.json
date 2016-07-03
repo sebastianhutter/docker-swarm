@@ -1,0 +1,32 @@
+{# import all variables from a central location -#}
+{% import "consul/variables.jinja" as vars -%}
+
+{
+  "checks": [
+    {% for c in vars.consul_checks -%}
+      {# get necessary values form the dict
+        and set defaults so the script wont fail is
+        not all parametera are set #}
+      {% set id = c.id|default('') -%}
+      {% set name = c.name|default('') -%}
+      {% set type = c.type|default('') -%}
+      {% set target = c.target|default('') -%}
+      {% set timeout = c.timeout|default('') -%}
+      {% set interval = c.interval|default('') -%}
+      {% set ttl = c.ttl|default('') -%}
+      {% set notes = c.notes|default('') -%}
+      {% set shell = c.shell|default('') -%}
+      {# ############# #}
+      {
+        {{ '"id": "%s",' % id if id else '' }}
+        {{ '"name": "%s",' % name if name else '' }}
+        {{ '"timeout": "%s",' % timeout if timeout else '' }}
+        {{ '"interval": "%s",' % interval if interval else '' }}  
+        {{ '"ttl": "%s",' % ttl if ttl else '' }}
+        {{ '"notes": "%s",' % notes if notes else '' }}
+        {{ '"shell": "%s",' % shell if shell else '' }}
+        {{ '"%s": "%s"' % (type, target) if type and target else '' }}
+      {{ '}' if loop.last else '},' }}
+    {% endfor %}
+  ]
+}

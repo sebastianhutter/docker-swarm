@@ -1,0 +1,71 @@
+#
+# this file contains global variables which are referenced in the state
+#
+
+#
+### local paths and users
+#
+
+# the directories in which we store the consul configurations
+{% set consul_config = salt['grains.get']('consul:config_dir', salt['pillar.get']('consul:config_dir','/etc/consul.d')) %}
+# persistent data directory
+{% set consul_data =  salt['grains.get']('consul:data_dir', salt['pillar.get']('consul:data_dir','/data/consul')) %}
+
+# name of the consul user and group
+{% set consul_user = salt['grains.get']('consul:user', salt['pillar.get']('consul:user','consul')) %}
+
+#
+### variables for installation
+#
+
+# get the consul version to install
+{% set consul_version = salt['grains.get']('consul:version', salt['pillar.get']('consul:version','0.6.4')) %}
+
+# create the consul archive name
+{% set consul_archive = 'consul_' + consul_version|string + '_linux_' + salt['grains.get']('osarch') + '.zip' %}
+
+# create the download url for the consul version
+{% set consul_url = 'https://releases.hashicorp.com/consul/' + consul_version|string + '/' + consul_archive %}
+
+# we keep different versions of consul (for easy rollback etc). the downloaded and extracted consul binary will
+# be renamed to consul_<consul_version>
+{% set consul_bin = 'consul_v' + consul_version %}
+
+#
+### variables for the consul.d templates
+#
+
+### consul agent configuration
+{% set consul_datacenter = salt['grains.get']('consul:datacenter', salt['pillar.get']('consul:datacenter','vagrant')) %}
+{% set consul_loglevel = salt['grains.get']('consul:loglevel', salt['pillar.get']('consul:loglevel','INFO')) %}
+{% set consul_enable_syslog = salt['grains.get']('consul:enable_syslog', salt['pillar.get']('consul:enable_syslog',true)) %}
+{% set consul_bootstrap_expect = salt['grains.get']('consul:bootstrap_expect', salt['pillar.get']('consul:bootstrap_expect',1)) %}
+{% set consul_nodename = salt['grains.get']('host') %}
+{% set consul_isserver = salt['grains.get']('consul:is_server', false) %}
+{% set consul_showsui = salt['grains.get']('consul:shows_ui', false) %}
+{% set consul_advertise_ip = salt['grains.get']('consul:advertise_ip',salt['grains.get']('ip4_interfaces:eth1:0')) %}
+{% set consul_port_dns = salt['grains.get']('consul:port_dns', salt['pillar.get']('consul:port_dns',8600)) %}
+{% set consul_port_http = salt['grains.get']('consul:port_http', salt['pillar.get']('consul:port_http',8500)) %}
+{% set consul_port_https = salt['grains.get']('consul:port_https', salt['pillar.get']('consul:port_https',-1)) %}
+{% set consul_port_rpc = salt['grains.get']('consul:port_rpc', salt['pillar.get']('consul:port_rpc',8400)) %}
+{% set consul_port_serf_lan = salt['grains.get']('consul:port_serf_lan', salt['pillar.get']('consul:port_serf_lan',8301)) %}
+{% set consul_port_serf_wan = salt['grains.get']('consul:port_serf_wan', salt['pillar.get']('consul:port_serf_wan',8302)) %}
+{% set consul_port_server = salt['grains.get']('consul:port_server', salt['pillar.get']('consul:port_server',8300)) %}
+
+### services and checks
+{% set consul_services = salt['grains.get']('consul:services', salt['pillar.get']('consul:services',[])) %}
+{% set consul_checks = salt['grains.get']('consul:checks', salt['pillar.get']('consul:checks',[])) %}
+
+#
+### variables for the systemd service file and environment
+#
+
+# addresses to which the consul agent tries to join to
+{% set consul_cluster_addresses = salt['grains.get']('consul:cluster_addresses', salt['pillar.get']('consul:cluster_addresses',['consul'])) %}
+
+# name of the systemd service file
+{% set consul_systemd_service = salt['grains.get']('consul:systemd_service', salt['pillar.get']('consul:systemd_service','/etc/systemd/system/consul.service')) %}
+# get the basename of the service file -> used to control the service with service.running
+{% set consul_systemd_service_name = consul_systemd_service.split('/')|last %}
+# name of the environment file
+{% set consul_systemd_environment = salt['grains.get']('consul:systemd_environment', salt['pillar.get']('consul:systemd_environment','/etc/default/consul.env')) %}
