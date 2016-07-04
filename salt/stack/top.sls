@@ -13,6 +13,4 @@ base:
     - docker
     - gluster.repository
     - gluster.client
-
-  'G@roles:swarm':
     - swarm
