@@ -38,6 +38,7 @@ docker-group:
 /etc/default:
   file.recurse:
     - source: salt://docker/files/etc/default
+    - template: jinja
 
 # reload systemd
 systemctl daemon-reload:
@@ -50,3 +51,6 @@ docker-service:
   service.running:
     - name: docker
     - enable: True
+    - onchanges:
+      - file: /etc/systemd/system/docker.service.d
+      - file: /etc/default
