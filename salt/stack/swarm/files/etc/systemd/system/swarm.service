@@ -6,9 +6,9 @@ After=docker.service
 [Service]
 Restart=always
 {% if swarm_master -%}
-ExecStart=/usr/bin/docker run -d -p 4000:4000 --name swarm swarm manage -H :4000 --replication --advertise {{advertise_ip}}:4000 consul://{{ consul_ip }}:8500
+ExecStart=/usr/bin/docker run -p 4000:4000 --name swarm swarm manage -H :4000 --replication --advertise {{advertise_ip}}:4000 consul://{{ consul_ip }}:8500
 {% else -%}
-ExecStart=/usr/bin/docker run -d --name swarm swarm join --advertise={{advertise_ip}}:2375 consul://{{ consul_ip }}:8500
+ExecStart=/usr/bin/docker run --name swarm swarm join --advertise={{advertise_ip}}:2375 consul://{{ consul_ip }}:8500
 {% endif -%}
 ExecStop=/usr/bin/docker stop -t 2 swarm ; /usr/bin/docker rm -f swarm
 
