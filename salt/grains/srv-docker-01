@@ -1,3 +1,8 @@
 
 roles:
   - docker
+  - swarm
+  - swarm-master
+
+swarm:
+  is_master: True

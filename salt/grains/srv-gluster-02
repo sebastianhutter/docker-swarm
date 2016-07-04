@@ -1,3 +1,6 @@
 
 roles:
   - gluster
+
+consul:
+  is_server: False
