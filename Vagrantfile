@@ -4,8 +4,8 @@
 #
 # setup a docker and glusterfs environment
 # 
-# srv-gluster-01 - gluster server (+ salt master + consul bootstrap)
-# srv-gluster-02 - gluster server
+# srv-gluster-01 - gluster server (+ salt master + consul server (with ui))
+# srv-gluster-02 - gluster server (+ consul server)
 # srv-docker-01 - docker node (swarm master)
 # srv-docker-02 - docker node
 # srv-docker-03 - docker node
@@ -147,6 +147,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     node.vm.hostname = "srv-docker-01"
 
     node.vm.network :private_network, ip: "192.168.56.111"
+
+    node.hostmanager.aliases =  "swarm"
     
     node.vm.provision :salt do |salt|
       salt.minion_config = File.join(etc, 'minion')
