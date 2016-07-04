@@ -11,6 +11,7 @@
   "advertise_addr": "{{vars.consul_advertise_ip}}",
   {% if vars.consul_isserver -%}
   "bootstrap_expect": {{vars.consul_bootstrap_expect|int}},
+  "client_addr": "{{vars.consul_advertise_ip}}",
   {% endif -%}
   "ports": {
     "dns": {{vars.consul_port_dns|int}},

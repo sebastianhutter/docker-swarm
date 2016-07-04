@@ -1,7 +1,7 @@
 #
 # install and configure nginx to show the consul ui page
-#
-
+# 
+ 
 nginx:
   pkg:
     - installed
