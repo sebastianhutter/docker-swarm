@@ -1,1 +1,5 @@
+{% import "docker/variables.jinja" as vars -%}
+# managed by salt
+{% if vars.docker_use_thinpool -%}
 DOCKER_STORAGE_OPTIONS=--storage-driver=devicemapper --storage-opt=dm.thinpooldev=/dev/mapper/docker-thinpool-tpool --storage-opt dm.use_deferred_removal=true
+{% endif %}

@@ -4,6 +4,8 @@
 
 {% import "docker/variables.jinja" as vars %}
 
+{% if vars.docker_use_thinpool %}
+
 /etc/lvm/profile/docker-thinpool.profile:
   file.managed:
     - source: salt://docker/files/etc/lvm/profile/docker-thinpool.profile
@@ -44,4 +46,4 @@ apply-profile:
   cmd.run: 
     - name: lvchange --metadataprofile docker-thinpool docker/thinpool
 
-  
+{% endif %} 

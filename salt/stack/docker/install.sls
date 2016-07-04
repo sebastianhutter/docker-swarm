@@ -2,6 +2,18 @@
 # install the docker engine
 #
 
+# install saltstack requirements to
+# manage docker
+pip:
+  pkg.installed:
+    - name: python-pip
+
+pip-docker:
+  pip.installed:
+    - name: docker-py>=1.4.0
+    - require:
+      - pkg: pip
+
 # we need to install docker-engine 
 # in a way it does not start automatically
 # due to the custom storage config

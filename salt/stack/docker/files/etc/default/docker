@@ -1,0 +1,2 @@
+{% import "docker/variables.jinja" as vars -%}
+# managed by salt
