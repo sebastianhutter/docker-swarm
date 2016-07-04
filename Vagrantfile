@@ -4,9 +4,9 @@
 #
 # setup a docker and glusterfs environment
 # 
-# srv-gluster-01 - gluster server (+ salt master + consul server (with ui))
+# srv-gluster-01 - gluster server (+ salt master + consul server (with ui) + swarm master))
 # srv-gluster-02 - gluster server (+ consul server)
-# srv-docker-01 - docker node (swarm master)
+# srv-docker-01 - docker node
 # srv-docker-02 - docker node
 # srv-docker-03 - docker node
 

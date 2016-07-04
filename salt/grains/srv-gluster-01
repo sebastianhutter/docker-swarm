@@ -2,7 +2,11 @@
 roles:
   - gluster
   - consul-bootstrap
+  - docker
 
 consul:
   shows_ui: True
   is_server: True
+
+swarm:
+  is_master: True
