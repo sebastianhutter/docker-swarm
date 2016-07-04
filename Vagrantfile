@@ -65,7 +65,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     node.vm.network :private_network, ip: "192.168.56.101"
 
-    node.hostmanager.aliases =  "salt consul"
+    node.hostmanager.aliases =  "salt consul swarm"
 
     node.vm.synced_folder stack, "/srv/salt"
     node.vm.synced_folder pillar, "/srv/pillar"
@@ -147,8 +147,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     node.vm.hostname = "srv-docker-01"
 
     node.vm.network :private_network, ip: "192.168.56.111"
-
-    node.hostmanager.aliases =  "swarm"
     
     node.vm.provision :salt do |salt|
       salt.minion_config = File.join(etc, 'minion')
