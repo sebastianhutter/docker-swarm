@@ -15,4 +15,7 @@
 #sudo convoy daemon --drivers glusterfs --driver-opts glusterfs.servers=srv-gluster-01,srv-gluster-02 --driver-opts glusterfs.defaultvolumepool=gvol0
 
 
+# and an example on how to start a docker container
+#docker run --rm -ti -v myconvoyvol:/data --volume-driver=convoy debian:jessie /bin/bash
+
 # needs to be saltified and also added to systemd
