@@ -1,0 +1,11 @@
+#
+# this file contains global variables which are referenced in the state
+#
+
+#
+### local paths and users
+#
+
+{% set swarm_advertise_ip = salt['grains.get']('swarm:advertise_ip',salt['grains.get']('ip4_interfaces:eth1:0')) %}
+{% set swarm_is_master = salt['grains.get']('swarm:is_master',salt['pillar.get']('swarm:is_master', False)) %}
+{% set consul_address = '192.168.56.101' %}
