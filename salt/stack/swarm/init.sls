@@ -29,6 +29,7 @@ swarm-image:
 swarm-service:
   service.running:
     - name: swarm
+    - enable: True
     - require:
         - file: /etc/systemd/system/swarm.service
         - dockerng: swarm-image
