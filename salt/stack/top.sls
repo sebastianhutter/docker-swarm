@@ -14,3 +14,4 @@ base:
     - gluster.repository
     - gluster.client
     - swarm
+    - convoy
