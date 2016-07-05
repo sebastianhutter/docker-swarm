@@ -1,0 +1,2 @@
+# convoy settings
+{% set convoy_version = salt['grains.get']('convoy:version', salt['pillar.get']('convoy:version', '0.4.3')) %}

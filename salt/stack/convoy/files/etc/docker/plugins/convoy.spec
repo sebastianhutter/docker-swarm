@@ -1,0 +1,1 @@
+unix:///var/run/convoy/convoy.sock" > /etc/docker/plugins/convoy.spec

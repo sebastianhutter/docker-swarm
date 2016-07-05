@@ -1,0 +1,13 @@
+[Unit]
+Description=Convoy Storage Plugin Service
+Requires=docker.service
+After=docker.service
+
+[Service]
+EnvironmentFile=/etc/default/convoy
+Restart=always
+ExecStart=/usr/local/bin/convoy daemon --drivers $STORAGE_DRIVER $DRIVER_OPTS
+
+[Install]
+WantedBy=default.target
+
