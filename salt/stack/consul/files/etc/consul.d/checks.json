@@ -1,21 +1,18 @@
-{# import all variables from a central location -#}
-{% import "consul/variables.jinja" as vars -%}
-
 {
   "checks": [
-    {% for c in vars.consul_checks -%}
+    {% for check, check_args in checks.items() -%}
       {# get necessary values form the dict
         and set defaults so the script wont fail is
         not all parametera are set #}
-      {% set id = c.id|default('') -%}
-      {% set name = c.name|default('') -%}
-      {% set type = c.type|default('') -%}
-      {% set target = c.target|default('') -%}
-      {% set timeout = c.timeout|default('') -%}
-      {% set interval = c.interval|default('') -%}
-      {% set ttl = c.ttl|default('') -%}
-      {% set notes = c.notes|default('') -%}
-      {% set shell = c.shell|default('') -%}
+      {% set id = check|default('') -%}
+      {% set name = check_args['name']|default('') -%}
+      {% set type = check_args['type']|default('') -%}
+      {% set target = check_args['target']|default('') -%}
+      {% set timeout = check_args['timeout']|default('') -%}
+      {% set interval = check_args['interval']|default('') -%}
+      {% set ttl = check_args['ttl']|default('') -%}
+      {% set notes = check_args['notes']|default('') -%}
+      {% set shell = check_args['shell']|default('') -%}
       {# ############# #}
       {
         {{ '"id": "%s",' % id if id else '' }}
@@ -25,7 +22,7 @@
         {{ '"ttl": "%s",' % ttl if ttl else '' }}
         {{ '"notes": "%s",' % notes if notes else '' }}
         {{ '"shell": "%s",' % shell if shell else '' }}
-        {{ '"%s": "%s"' % (type, target) if type and target else '' }}
+        {{ '"%s": "%s"' % (type, target) }}
       {{ '}' if loop.last else '},' }}
     {% endfor %}
   ]

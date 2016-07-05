@@ -5,13 +5,16 @@ base:
     
   'G@roles:gluster':
     - gluster
-
-  'G@roles:consul-bootstrap':
-    - consul.nginx
     
   'G@roles:docker':
     - docker
     - gluster.repository
     - gluster.client
     - swarm
+  
+  'G@roles:nginx':
+    - nginx
+
+  'G@roles:convoy':
     - convoy
+

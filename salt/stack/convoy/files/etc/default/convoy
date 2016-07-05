@@ -1,2 +1,4 @@
-STORAGE_DRIVER=glusterfs
-DRIVER_OPTS="--driver-opts glusterfs.servers=srv-gluster-01,srv-gluster-02 --driver-opts glusterfs.defaultvolumepool=gvol0"
+# managed by salt
+
+STORAGE_DRIVER={{storagedriver}}
+DRIVER_OPTS="--driver-opts glusterfs.servers={{glusterservers}} --driver-opts glusterfs.defaultvolumepool={{glustervolume}}"

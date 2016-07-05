@@ -14,6 +14,8 @@
     - group: root
     - mode: 644
     - template: jinja
+    - context:
+        services: {{vars.consul_services}}
 
 # copy the checks file 
 {{vars.consul_config}}/checks.json:
@@ -23,3 +25,5 @@
     - group: root
     - mode: 644
     - template: jinja
+    - context:
+        checks: {{vars.consul_checks}}

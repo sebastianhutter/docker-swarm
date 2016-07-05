@@ -7,19 +7,19 @@
 #
 
 # the directories in which we store the consul configurations
-{% set consul_config = salt['grains.get']('consul:config_dir', salt['pillar.get']('consul:config_dir','/etc/consul.d')) %}
+{% set consul_config = salt['grains.get']('consul:config_dir', salt['pillar.get']('consul:config_dir','')) %}
 # persistent data directory
-{% set consul_data =  salt['grains.get']('consul:data_dir', salt['pillar.get']('consul:data_dir','/data/consul')) %}
+{% set consul_data =  salt['grains.get']('consul:data_dir', salt['pillar.get']('consul:data_dir','')) %}
 
 # name of the consul user and group
-{% set consul_user = salt['grains.get']('consul:user', salt['pillar.get']('consul:user','consul')) %}
+{% set consul_user = salt['grains.get']('consul:user', salt['pillar.get']('consul:user','')) %}
 
 #
 ### variables for installation
 #
 
 # get the consul version to install
-{% set consul_version = salt['grains.get']('consul:version', salt['pillar.get']('consul:version','0.6.4')) %}
+{% set consul_version = salt['grains.get']('consul:version', salt['pillar.get']('consul:version','')) %}
 
 # create the consul archive name
 {% set consul_archive = 'consul_' + consul_version|string + '_linux_' + salt['grains.get']('osarch') + '.zip' %}
@@ -36,32 +36,32 @@
 #
 
 ### consul agent configuration
-{% set consul_datacenter = salt['grains.get']('consul:datacenter', salt['pillar.get']('consul:datacenter','vagrant')) %}
-{% set consul_loglevel = salt['grains.get']('consul:loglevel', salt['pillar.get']('consul:loglevel','INFO')) %}
-{% set consul_enable_syslog = salt['grains.get']('consul:enable_syslog', salt['pillar.get']('consul:enable_syslog',true)) %}
-{% set consul_bootstrap_expect = salt['grains.get']('consul:bootstrap_expect', salt['pillar.get']('consul:bootstrap_expect',1)) %}
+{% set consul_datacenter = salt['grains.get']('consul:config:datacenter', salt['pillar.get']('consul:config:datacenter','')) %}
+{% set consul_loglevel = salt['grains.get']('consul:config:loglevel', salt['pillar.get']('consul:config:loglevel','')) %}
+{% set consul_enable_syslog = salt['grains.get']('consul:config:enable_syslog', salt['pillar.get']('consul:config:enable_syslog',true)) %}
+{% set consul_bootstrap_expect = salt['grains.get']('consul:config:bootstrap_expect', salt['pillar.get']('consul:config:bootstrap_expect')) %}
 {% set consul_nodename = salt['grains.get']('host') %}
-{% set consul_isserver = salt['grains.get']('consul:is_server', false) %}
-{% set consul_showsui = salt['grains.get']('consul:shows_ui', false) %}
-{% set consul_advertise_ip = salt['grains.get']('consul:advertise_ip',salt['grains.get']('ip4_interfaces:eth1:0')) %}
-{% set consul_port_dns = salt['grains.get']('consul:port_dns', salt['pillar.get']('consul:port_dns',8600)) %}
-{% set consul_port_http = salt['grains.get']('consul:port_http', salt['pillar.get']('consul:port_http',8500)) %}
-{% set consul_port_https = salt['grains.get']('consul:port_https', salt['pillar.get']('consul:port_https',-1)) %}
-{% set consul_port_rpc = salt['grains.get']('consul:port_rpc', salt['pillar.get']('consul:port_rpc',8400)) %}
-{% set consul_port_serf_lan = salt['grains.get']('consul:port_serf_lan', salt['pillar.get']('consul:port_serf_lan',8301)) %}
-{% set consul_port_serf_wan = salt['grains.get']('consul:port_serf_wan', salt['pillar.get']('consul:port_serf_wan',8302)) %}
-{% set consul_port_server = salt['grains.get']('consul:port_server', salt['pillar.get']('consul:port_server',8300)) %}
+{% set consul_isserver = salt['grains.get']('consul:config:is_server', salt['pillar.get']('consul:config:is_server', false)) %}
+{% set consul_showsui = salt['grains.get']('consul:config:shows_ui', salt['pillar.get']('consul:config:shows_ui', false)) %}
+{% set consul_advertise_ip = salt['grains.get']('consul:config:advertise_ip',salt['grains.get']('ip4_interfaces:eth1:0')) %}
+{% set consul_port_dns = salt['grains.get']('consul:config:port_dns', salt['pillar.get']('consul:config:port_dns',8600)) %}
+{% set consul_port_http = salt['grains.get']('consul:config:port_http', salt['pillar.get']('consul:config:port_http',8500)) %}
+{% set consul_port_https = salt['grains.get']('consul:config:port_https', salt['pillar.get']('consul:config:port_https',-1)) %}
+{% set consul_port_rpc = salt['grains.get']('consul:config:port_rpc', salt['pillar.get']('consul:config:port_rpc',8400)) %}
+{% set consul_port_serf_lan = salt['grains.get']('consul:config:port_serf_lan', salt['pillar.get']('consul:config:port_serf_lan',8301)) %}
+{% set consul_port_serf_wan = salt['grains.get']('consul:config:port_serf_wan', salt['pillar.get']('consul:config:port_serf_wan',8302)) %}
+{% set consul_port_server = salt['grains.get']('consul:config:port_server', salt['pillar.get']('consul:config:port_server',8300)) %}
 
 ### services and checks
-{% set consul_services = salt['grains.get']('consul:services', salt['pillar.get']('consul:services',[])) %}
-{% set consul_checks = salt['grains.get']('consul:checks', salt['pillar.get']('consul:checks',[])) %}
+{% set consul_services = salt['grains.get']('consul:services', salt['pillar.get']('consul:services',{})) %}
+{% set consul_checks = salt['grains.get']('consul:checks', salt['pillar.get']('consul:checks',{})) %}
 
 #
 ### variables for the systemd service file and environment
 #
 
 # addresses to which the consul agent tries to join to
-{% set consul_cluster_addresses = salt['grains.get']('consul:cluster_addresses', salt['pillar.get']('consul:cluster_addresses',['consul'])) %}
+{% set consul_cluster_addresses = salt['grains.get']('consul:config:cluster_addresses', salt['pillar.get']('consul:config:cluster_addresses',[])) %}
 
 # name of the systemd service file
 {% set consul_systemd_service = salt['grains.get']('consul:systemd_service', salt['pillar.get']('consul:systemd_service','/etc/systemd/system/consul.service')) %}

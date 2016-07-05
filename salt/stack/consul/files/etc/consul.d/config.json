@@ -1,25 +1,23 @@
-{# import all variables from a central location -#}
-{% import "consul/variables.jinja" as vars -%}
 {
-  "datacenter": "{{vars.consul_datacenter}}",
-  "data_dir": "{{vars.consul_data}}",
-  "log_level": "{{vars.consul_loglevel}}",
-  "enable_syslog": {{ 'true,' if vars.consul_enable_syslog else 'false,' }}
-  "node_name": "{{vars.consul_nodename}}",
-  "server": {{ 'true,' if vars.consul_isserver else 'false,' }}
-  "ui": {{ 'true,' if vars.consul_showsui else 'false,' }}
-  "advertise_addr": "{{vars.consul_advertise_ip}}",
-  {% if vars.consul_isserver -%}
-  "bootstrap_expect": {{vars.consul_bootstrap_expect|int}},
-  "client_addr": "{{vars.consul_advertise_ip}}",
+  "datacenter": "{{datacenter}}",
+  "data_dir": "{{datadir}}",
+  "log_level": "{{loglevel}}",
+  "enable_syslog": {{ 'true,' if syslog else 'false,' }}
+  "node_name": "{{nodename}}",
+  "server": {{ 'true,' if server else 'false,' }}
+  "ui": {{ 'true,' if ui else 'false,' }}
+  "advertise_addr": "{{advertise}}",
+  {% if server -%}
+  "bootstrap_expect": {{bootstrap|int}},
+  "client_addr": "{{client}}",
   {% endif -%}
   "ports": {
-    "dns": {{vars.consul_port_dns|int}},
-    "http": {{vars.consul_port_http|int}},
-    "https": {{vars.consul_port_https|int}},
-    "rpc": {{vars.consul_port_rpc|int}},
-    "serf_lan": {{vars.consul_port_serf_lan|int}},
-    "serf_wan": {{vars.consul_port_serf_wan|int}},
-    "server": {{vars.consul_port_server|int}}
+    "dns": {{port_dns|int}},
+    "http": {{port_http|int}},
+    "https": {{port_https|int}},
+    "rpc": {{port_rpc|int}},
+    "serf_lan": {{port_serf_lan|int}},
+    "serf_wan": {{port_serf_wan|int}},
+    "server": {{port_server|int}}
   }
 }

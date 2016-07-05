@@ -1,17 +1,15 @@
-{# import all variables from a central location -#}
-{% import "consul/variables.jinja" as vars -%}
 {
   "services": [
-  {% for s in vars.consul_services -%}
+  {% for service, service_args in services.items() -%}
     {# get necessary values form the dict
       and set defaults so the script wont fail is
       not all parametera are set #}
-    {% set id = s.id|default('') -%}
-    {% set name = s.name|default('') -%}
-    {% set address = s.address|default('') -%}
-    {% set port = s.port|default('') -%}
-    {% set tags = s.tags|default([]) -%}
-    {% set checks = s.checks|default([]) -%}
+    {% set id = service_args['id']|default('') -%}
+    {% set name = service|default('') -%}
+    {% set address = service_args['address']|default('') -%}
+    {% set port = service_args['port']|default('') -%}
+    {% set tags = service_args['tags']|default([]) -%}
+    {% set checks = service_args['checks']|default([]) -%}
     {# ############# #}
     {
       {{ '"id": "%s",' % id if id else '' }}
@@ -24,7 +22,7 @@
       {% endfor %}
       ],
       "checks": [
-      {% for c in s.checks -%}
+      {% for c in checks -%}
         {
           {# get necessary values form the dict
             and set defaults so the script wont fail is

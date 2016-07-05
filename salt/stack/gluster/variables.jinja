@@ -1,13 +1,12 @@
 # gluster variables
 
 ## physical disk config
-{% set gluster_device = salt['grains.get']('gluster:device', salt['pillar.get']('gluster:device', '/dev/sdb')) %}
-{% set gluster_vg_name = salt['grains.get']('gluster:lvm:vg_name', salt['pillar.get']('gluster:lvm:vg_name', 'vgglus1')) %}
-{% set gluster_lv_name = salt['grains.get']('gluster:lvm:lv_name', salt['pillar.get']('gluster:lvm:lv_name', 'gbrick1')) %}
-{% set gluster_lv_size = salt['grains.get']('gluster:lvm:lv_size', salt['pillar.get']('gluster:lvm:lv_size', '50G')) %}
-{% set gluster_lv_mount = salt['grains.get']('gluster:lvm:mount', salt['pillar.get']('gluster:lvm:mount', '/var/lib/gbrick1')) %}
+{% set gluster_device = salt['grains.get']('gluster:disk', salt['pillar.get']('gluster:disk', '')) %}
+{% set gluster_vg_name = salt['grains.get']('gluster:lvm:vg_name', salt['pillar.get']('gluster:lvm:vg_name', '')) %}
+{% set gluster_lv_name = salt['grains.get']('gluster:lvm:lv_name', salt['pillar.get']('gluster:lvm:lv_name', '')) %}
+
 ## gluster cluster
-{% set gluster_peers = salt['grains.get']('gluster:peers', salt['pillar.get']('gluster:peers', ['srv-gluster-01', 'srv-gluster-02'])) %}
+{% set gluster_peers = salt['grains.get']('gluster:peers', salt['pillar.get']('gluster:peers', [])) %}
 ## cluster volume
-{% set gluster_volume_directory = salt['grains.get']('gluster:volume:directory', salt['pillar.get']('gluster:volume:directory', '/var/lib/gluster')) %}
-{% set gluster_volume_name = salt['grains.get']('gluster:volume:name', salt['pillar.get']('gluster:volume:name', 'gvol0')) %}
+{% set gluster_volume_directory = salt['grains.get']('gluster:volume:directory', salt['pillar.get']('gluster:volume:directory', '')) %}
+{% set gluster_volume_name = salt['grains.get']('gluster:volume:name', salt['pillar.get']('gluster:volume:name', '')) %}

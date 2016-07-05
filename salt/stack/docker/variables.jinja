@@ -1,8 +1,8 @@
 # docker variables
 
 ## storage config
-{% set docker_storage_device = salt['grains.get']('docker:storage:device', salt['pillar.get']('docker:storage:device', '/dev/sdb')) %}
-{% set docker_storage_vg_name = salt['grains.get']('docker:storage:vg_name', salt['pillar.get']('docker:storage:vg_name', 'docker')) %}
+{% set docker_storage_device = salt['grains.get']('docker:storage:device', salt['pillar.get']('docker:storage:device', '')) %}
+{% set docker_storage_vg_name = salt['grains.get']('docker:storage:vg_name', salt['pillar.get']('docker:storage:vg_name', '')) %}
 # should the lvm thinpool storage driver be installed?
 {% set docker_use_thinpool = salt['grains.get']('docker:storage:use_thinpool', salt['pillar.get']('docker:storage:use_thinpool', False)) %}
 

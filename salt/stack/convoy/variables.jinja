@@ -1,2 +1,7 @@
 # convoy settings
-{% set convoy_version = salt['grains.get']('convoy:version', salt['pillar.get']('convoy:version', '0.4.3')) %}
+{% set convoy_version = salt['grains.get']('convoy:version', salt['pillar.get']('convoy:version', '')) %}
+## storage config
+{% set convoy_driver = salt['grains.get']('convoy:storage:driver', salt['pillar.get']('convoy:storage:driver', '')) %}
+# glusterfs config
+{% set convoy_gluster_servers = salt['grains.get']('convoy:storage:gluster_servers', salt['pillar.get']('convoy:storage:gluster_servers', [])) %}
+{% set convoy_gluster_volume = salt['grains.get']('convoy:storage:gluster_volume', salt['pillar.get']('convoy:storage:gluster_volume', '')) %}

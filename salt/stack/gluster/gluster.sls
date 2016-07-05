@@ -27,5 +27,4 @@ create-gluster-volume:
         {% endfor -%}
         && gluster volume start {{vars.gluster_volume_name}}
     - shell: /bin/bash
-
 {% endif %}

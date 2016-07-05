@@ -59,3 +59,23 @@ setup:
     - group: root
     - mode: 644
     - template: jinja
+    - context:
+        datacenter: {{vars.consul_datacenter}}
+        datadir: {{vars.consul_data}}
+        loglevel: {{vars.consul_loglevel}}
+        syslog: {{vars.consul_enable_syslog}}
+        nodename: {{vars.consul_nodename}}
+        server: {{vars.consul_isserver}}
+        ui: {{vars.consul_showsui}}
+        advertise: {{vars.consul_advertise_ip}}
+        bootstrap: {{vars.consul_bootstrap_expect}}
+        client: {{vars.consul_advertise_ip}}
+        port_dns: {{vars.consul_port_dns}}
+        port_http: {{vars.consul_port_http}}
+        port_https: {{vars.consul_port_https}}
+        port_rpc: {{vars.consul_port_rpc}}
+        port_serf_lan: {{vars.consul_port_serf_lan}}
+        port_serf_wan: {{vars.consul_port_serf_wan}}
+        port_server: {{vars.consul_port_server}}
+
+

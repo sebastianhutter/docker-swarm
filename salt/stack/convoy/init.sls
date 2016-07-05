@@ -8,8 +8,8 @@
 install-convoy:
   cmd.run:
     - name: |
-        curl -Ls https://github.com/rancher/convoy/releases/download/v{{vars.docker_convoy_version}}/convoy.tar.gz | tar xz --strip-components=1 -C /usr/local/bin
-    - unless: test -x /usr/local/bin/convoy && /usr/local/bin/convoy -v | grep v{{vars.docker_convoy_version}}
+        curl -Ls https://github.com/rancher/convoy/releases/download/v{{vars.convoy_version}}/convoy.tar.gz | tar xz --strip-components=1 -C /usr/local/bin
+    - unless: test -x /usr/local/bin/convoy && /usr/local/bin/convoy -v | grep v{{vars.convoy_version}}
     - cwd: /tmp
     - shell: /bin/bash
     - timeout: 300
@@ -26,6 +26,10 @@ install-convoy:
   file.managed:
     - source: salt://convoy/files/etc/default/convoy
     - template: jinja
+    - context:
+        storagedriver: {{vars.convoy_driver}}
+        glusterservers: {{vars.convoy_gluster_servers|join(',')}}
+        glustervolume: {{vars.convoy_gluster_volume}}
 
 # create the systemd unit
 /etc/systemd/system/convoy.service:
