@@ -9,6 +9,7 @@
   "advertise_addr": "{{advertise}}",
   {% if server -%}
   "bootstrap_expect": {{bootstrap|int}},
+  "client_addr": "{{client_addr}}",
   {% endif -%}
   "ports": {
     "dns": {{port_dns|int}},

@@ -14,7 +14,7 @@ ExecStartPre=/bin/bash -c "/bin/rm -rf {{datadir}}/*"
 {% endif -%}
 ExecStart=/usr/local/bin/consul agent -config-dir "$CONFIG_DIR"
 ExecStartPost=-/bin/bash -c "echo sleeping; /bin/sleep 3; echo joining; \
-                            /usr/local/bin/consul join $CLUSTER_ADDRESSES"
+                            /usr/local/bin/consul join ${CLUSTER_ADDRESSES}"
 ExecReload=/bin/kill -HUP $MAINPID
 KillSignal=SIGINT
 User={{user}}

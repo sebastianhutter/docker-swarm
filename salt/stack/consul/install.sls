@@ -68,6 +68,7 @@ setup:
         server: {{vars.consul_isserver}}
         ui: {{vars.consul_showsui}}
         advertise: {{vars.consul_advertise_ip}}
+        client_addr: {{vars.consul_client_ip}}
         bootstrap: {{vars.consul_bootstrap_expect}}
         client: {{vars.consul_advertise_ip}}
         port_dns: {{vars.consul_port_dns}}

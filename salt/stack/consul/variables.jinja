@@ -43,7 +43,8 @@
 {% set consul_nodename = salt['grains.get']('host') %}
 {% set consul_isserver = salt['grains.get']('consul:config:is_server', salt['pillar.get']('consul:config:is_server', false)) %}
 {% set consul_showsui = salt['grains.get']('consul:config:shows_ui', salt['pillar.get']('consul:config:shows_ui', false)) %}
-{% set consul_advertise_ip = salt['grains.get']('consul:config:advertise_ip',salt['grains.get']('ip4_interfaces:eth1:0')) %}
+{% set consul_advertise_ip = salt['grains.get']('consul:config:advertise_ip',salt['pillar.get']('consul:config:advertise_ip',salt['grains.get']('ip4_interfaces:eth1:0'))) %}
+{% set consul_client_ip = salt['grains.get']('consul:config:client_ip',salt['pillar.get']('consul:config:client_ip',salt['grains.get']('ip4_interfaces:eth1:0'))) %}
 {% set consul_port_dns = salt['grains.get']('consul:config:port_dns', salt['pillar.get']('consul:config:port_dns',8600)) %}
 {% set consul_port_http = salt['grains.get']('consul:config:port_http', salt['pillar.get']('consul:config:port_http',8500)) %}
 {% set consul_port_https = salt['grains.get']('consul:config:port_https', salt['pillar.get']('consul:config:port_https',-1)) %}
