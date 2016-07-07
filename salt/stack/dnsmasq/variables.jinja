@@ -1,0 +1,10 @@
+#
+# dnsmasq variables
+#
+
+
+# listen interface
+{% set dnsmasq_listen_interfaces = salt['grains.get']('dnsmasq:listen_ip',[salt['grains.get']('ip4_interfaces:eth1:0')]) %}
+
+# dns servers
+{% set dnsmasq_servers = salt['grains.get']('dnsmasq:servers',salt['pillar.get']('dnsmasq:servers',[])) %}
