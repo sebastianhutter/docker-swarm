@@ -2,7 +2,6 @@ base:
   '*':
     - common
     - consul
-    - dnsmasq
     
   'G@roles:gluster':
     - gluster
@@ -19,3 +18,4 @@ base:
 
   'G@roles:consul-master':
     - consul-master
+    - dnsmasq
