@@ -7,5 +7,8 @@
 #
 
 {% set swarm_advertise_ip = salt['grains.get']('swarm:advertise_ip',salt['grains.get']('ip4_interfaces:eth1:0')) %}
+{% set swarm_advertise_port = salt['grains.get']('swarm:port',salt['pillar.get']('swarm:port', 2375)) %}
 {% set swarm_is_master = salt['grains.get']('swarm:is_master',salt['pillar.get']('swarm:is_master', False)) %}
-{% set consul_address = salt['grains.get']('swarm:consul_address',salt['pillar.get']('swarm:consul_address', '')) %}
+{% set consul_address = salt['grains.get']('swarm:consul:address',salt['pillar.get']('swarm:consul:address', '')) %}
+{% set consul_port = salt['grains.get']('swarm:consul:port',salt['pillar.get']('swarm:consul:port', 8500)) %}
+{% set consul_prefix = salt['grains.get']('swarm:consul:prefix',salt['pillar.get']('swarm:consul:prefix', '')) %} 
