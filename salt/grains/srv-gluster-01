@@ -5,9 +5,3 @@ roles:
   - docker
   - swarm-master
   - nginx
-
-consul:
-  config:
-    cluster_addresses:
-      - 192.168.56.101
-      # 'consul' is resolved as 127.0.0.1 which causes the consul master to have problems
