@@ -1,0 +1,14 @@
+[Unit]
+Description=Registrator Container
+Requires=docker.service 
+After=docker.service
+
+[Service]
+Restart=always
+EnvironmentFile=/etc/default/registrator.env
+ExecStart=/usr/bin/docker run --name registrator  --net=host --volume=/var/run/docker.sock:/tmp/docker.sock gliderlabs/registrator consul://${CONSUL_IP}:${CONSUL_PORT} 
+ExecStop=/usr/bin/docker stop -t 2 registrator ; /usr/bin/docker rm -f registrator
+
+[Install]
+WantedBy=default.target
+

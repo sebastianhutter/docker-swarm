@@ -1,0 +1,7 @@
+#
+# this file contains global variables which are referenced in the state
+#
+
+{% set consul_address = salt['grains.get']('registrator:consul:address',salt['pillar.get']('registrator:consul:address', '')) %}
+{% set consul_port = salt['grains.get']('registrator:consul:port',salt['pillar.get']('registrator:consul:port', 8500)) %}
+{% set consul_prefix = salt['grains.get']('registrator:consul:prefix',salt['pillar.get']('registrator:consul:prefix', '')) %} 

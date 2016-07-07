@@ -12,6 +12,7 @@ base:
     - gluster.repository
     - gluster.client
     - swarm
+    - registrator
   
   'G@roles:nginx':
     - nginx

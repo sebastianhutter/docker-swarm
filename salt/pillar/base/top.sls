@@ -9,6 +9,7 @@ base:
   'G@roles:docker':
     - docker
     - swarm
+    - registrator
 
   'G@roles:convoy':
     - convoy
