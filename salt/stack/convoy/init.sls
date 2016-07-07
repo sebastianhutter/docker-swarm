@@ -53,3 +53,9 @@ reload-convoy:
     - onchanges:
         - file: /etc/systemd/system/convoy.service
         - file: /etc/default/convoy
+
+# add a sudoers entry so consul can run a check command
+/etc/sudoers.d/10-consul-check:
+  file.managed:
+    - contents: |
+        consul ALL = NOPASSWD: /usr/local/bin/convoy info
