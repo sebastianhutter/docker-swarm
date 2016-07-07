@@ -7,7 +7,7 @@ nginx:
       - file: /etc/nginx/sites-available/proxy.conf
 
 # disable the default site
-/etc/nginx/sites-enabled/default.conf:
+/etc/nginx/sites-enabled/default:
   file.absent:
     - require:
       - pkg: nginx
