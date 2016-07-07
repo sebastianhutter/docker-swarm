@@ -12,6 +12,12 @@
     - source: salt://consul/files/etc/systemd/system/consul.service
     - watch_in:
       - cmd: systemctl-daemon-reload
+    - context:
+        environmentfile: {{vars.consul_systemd_environment}}
+        isserver:  {{vars.consul_isserver}}
+        datadir: {{vars.consul_data}}
+        user: {{vars.consul_user}}
+
 
 # copy the environment file
 {{vars.consul_systemd_environment}}:

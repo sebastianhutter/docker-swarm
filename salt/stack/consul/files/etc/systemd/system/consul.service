@@ -1,5 +1,4 @@
-{# import all variables from a central location #}
-{% import "consul/variables.jinja" as vars -%}
+# managed by salt
 
 [Unit]
 Description=Consul Agent
@@ -9,14 +8,17 @@ After=network-online.target
 [Service]
 Restart=on-failure
 TimeoutStartSec=5
-EnvironmentFile={{vars.consul_systemd_environment}}
+EnvironmentFile= {{environmentfile}}
+{%if isserver -%}
+ExecStartPre=/bin/bash -c "/bin/rm -rf {{datadir}}/*"
+{% endif -%}
 ExecStart=/usr/local/bin/consul agent -config-dir "$CONFIG_DIR"
 ExecStartPost=-/bin/bash -c "echo sleeping; /bin/sleep 3; echo joining; \
                             /usr/local/bin/consul join $CLUSTER_ADDRESSES"
 ExecReload=/bin/kill -HUP $MAINPID
 KillSignal=SIGINT
-User={{vars.consul_user}}
-Group={{vars.consul_user}}
+User={{user}}
+Group={{user}}
 
 [Install]
 WantedBy=multi-user.target
