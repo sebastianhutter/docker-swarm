@@ -91,6 +91,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       salt.verbose = true
       salt.colorize = true
       salt.bootstrap_options = "-P -c /tmp"
+      salt.run_highstate = true
     end
 
     node.vm.provider :virtualbox do |v|
@@ -124,6 +125,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       salt.verbose = true
       salt.colorize = true
       salt.bootstrap_options = "-P -c /tmp"
+      salt.run_highstate = true
     end
 
     node.vm.provider :virtualbox do |v|
@@ -157,6 +159,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       salt.verbose = true
       salt.colorize = true
       salt.bootstrap_options = "-P -c /tmp"
+      salt.run_highstate = true
     end
 
     node.vm.provider :virtualbox do |v|
@@ -189,6 +192,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       salt.verbose = true
       salt.colorize = true
       salt.bootstrap_options = "-P -c /tmp"
+      salt.run_highstate = true
     end
 
     node.vm.provider :virtualbox do |v|
@@ -221,6 +225,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       salt.verbose = true
       salt.colorize = true
       salt.bootstrap_options = "-P -c /tmp"
+      salt.run_highstate = true
     end
 
     node.vm.provider :virtualbox do |v|
