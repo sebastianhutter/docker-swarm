@@ -1,7 +1,7 @@
 [Unit]
 Description=Swarm Container
-Requires=docker.service
-After=docker.service
+Requires=docker.service dnsmasq.service
+After=docker.service dnsmasq.service
 
 [Service]
 Restart=always
