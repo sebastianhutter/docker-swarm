@@ -5,3 +5,4 @@
 include:
   - .disk
   - .tools
+  - .dns
