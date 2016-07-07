@@ -2,3 +2,5 @@
 roles:
   - gluster
   - consul-master
+  - docker
+  - swarm-master
