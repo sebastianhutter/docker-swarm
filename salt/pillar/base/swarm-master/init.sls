@@ -1,6 +1,7 @@
 
 swarm:
   is_master: True
+  port: 4000
 
 consul:
   services:
