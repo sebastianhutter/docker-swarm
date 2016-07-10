@@ -5,3 +5,5 @@ roles:
   - docker
   - swarm-master
   - nginx
+  - nomad
+  - nomad-master
