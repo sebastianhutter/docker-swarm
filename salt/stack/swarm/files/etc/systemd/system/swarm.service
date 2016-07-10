@@ -1,15 +1,15 @@
 [Unit]
 Description=Swarm Container
-Requires=docker.service dnsmasq.service
-After=docker.service dnsmasq.service
+Requires=docker.service 
+After=docker.service
 
 [Service]
 Restart=always
 EnvironmentFile=/etc/default/swarm.env
 {% if swarm_master -%}
-ExecStart=/usr/bin/docker run -p ${ADVERTISE_PORT}:${ADVERTISE_PORT} --name swarm swarm manage -H :${ADVERTISE_PORT} --replication --advertise ${ADVERTISE_IP}:${ADVERTISE_PORT} consul://${CONSUL_IP}:${CONSUL_PORT}/${CONSUL_PREFIX}
+ExecStart=/usr/bin/docker run -l SERVICE_IGNORE=true -p ${ADVERTISE_PORT}:${ADVERTISE_PORT} --name swarm swarm manage -H :${ADVERTISE_PORT} --replication --advertise ${ADVERTISE_IP}:${ADVERTISE_PORT} consul://${CONSUL_IP}:${CONSUL_PORT}/${CONSUL_PREFIX}
 {% else -%}
-ExecStart=/usr/bin/docker run --name swarm swarm join --advertise=${ADVERTISE_IP}:${ADVERTISE_PORT} consul://${CONSUL_IP}:${CONSUL_PORT}/${CONSUL_PREFIX}
+ExecStart=/usr/bin/docker run -l SERVICE_IGNORE=true --name swarm swarm join --advertise=${ADVERTISE_IP}:${ADVERTISE_PORT} consul://${CONSUL_IP}:${CONSUL_PORT}/${CONSUL_PREFIX}
 {% endif -%}
 ExecStop=/usr/bin/docker stop -t 2 swarm ; /usr/bin/docker rm -f swarm
 
