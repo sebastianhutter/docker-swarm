@@ -10,7 +10,7 @@
 # download the consul archive (if the consul version is not installed yet
 # copied the cmd.run idea from philipps saltstack
 
-setup:
+setup-consul:
   cmd.run:
       - name: |
           wget {{ vars.consul_url }} && unzip {{ vars.consul_archive }}

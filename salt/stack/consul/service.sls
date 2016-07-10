@@ -11,7 +11,7 @@
     - template: jinja
     - source: salt://consul/files/etc/systemd/system/consul.service
     - watch_in:
-      - cmd: systemctl-daemon-reload
+      - cmd: systemctl-daemon-reload-consul
     - context:
         environmentfile: {{vars.consul_systemd_environment}}
         isserver:  {{vars.consul_isserver}}
@@ -26,7 +26,7 @@
     - source: salt://consul/files/etc/default/consul.env
 
 # reload the systemd daemon if the service file changes
-systemctl-daemon-reload:
+systemctl-daemon-reload-consul:
   cmd.wait:
     - name: systemctl daemon-reload
 
@@ -37,4 +37,4 @@ service-consul:
     - enable: True
     - require:
       - file: {{vars.consul_systemd_service}}
-      - cmd: systemctl-daemon-reload
+      - cmd: systemctl-daemon-reload-consul
