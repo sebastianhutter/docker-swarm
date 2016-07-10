@@ -4,8 +4,8 @@
 #
 # setup a docker and glusterfs environment
 # 
-# srv-gluster-01 - gluster server (+ salt master + consul server (with ui) + swarm master))
-# srv-gluster-02 - gluster server (+ consul server)
+# srv-gluster-01 - gluster server (+ salt master + consul server (with ui) + swarm master) + nomad master)
+# srv-gluster-02 - gluster server (+ consul server + swarm master + nomad master)
 # srv-docker-01 - docker node
 # srv-docker-02 - docker node
 # srv-docker-03 - docker node
@@ -37,6 +37,8 @@ pillar = File.join(vagrant_root, 'salt', 'pillar')
 keys = File.join(vagrant_root, 'salt', 'keys')
 etc = File.join(vagrant_root, 'salt', 'etc')
 grains = File.join(vagrant_root, 'salt', 'grains')
+nomad = File.join(vagrant_root, 'nomad') 
+
 #
 # setup
 #
@@ -69,6 +71,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     node.vm.synced_folder stack, "/srv/salt"
     node.vm.synced_folder pillar, "/srv/pillar"
+    node.vm.synced_folder nomad, "/srv/nomad"
     
     node.vm.provision :salt do |salt|
       salt.master_config = File.join(etc, 'master')
@@ -93,10 +96,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       salt.bootstrap_options = "-P -c /tmp"
       salt.run_highstate = true
     end
+    # write correct resolve.conf
+    #config.vm.provision "shell", inline: $script, run: "always"
 
     node.vm.provider :virtualbox do |v|
       v.customize ["modifyvm", :id, "--memory", 1024]
       v.customize ["modifyvm", :id, "--cpus", 2]
+      v.customize ['modifyvm', :id, '--natdnshostresolver1', 'off']
+      v.customize ['modifyvm', :id, '--natdnsproxy1', 'off']
+      v.customize ['modifyvm', :id, '--natdnspassdomain1', 'off']
 
       # add second disk for bricks
       diskfile = File.join(machine_folder, "srv-gluster-01", 'disk2.vdi')
@@ -127,10 +135,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       salt.bootstrap_options = "-P -c /tmp"
       salt.run_highstate = true
     end
+    # write correct resolve.conf
+    #config.vm.provision "shell", inline: $script, run: "always"
 
     node.vm.provider :virtualbox do |v|
       v.customize ["modifyvm", :id, "--memory", 1024]
       v.customize ["modifyvm", :id, "--cpus", 2]
+      v.customize ['modifyvm', :id, '--natdnshostresolver1', 'off']
+      v.customize ['modifyvm', :id, '--natdnsproxy1', 'off']
+      v.customize ['modifyvm', :id, '--natdnspassdomain1', 'off']
 
       # add second disk for bricks
       diskfile = File.join(machine_folder, "srv-gluster-02", 'disk2.vdi')
@@ -141,6 +154,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       v.customize ['storagectl', :id, '--name', 'SATA Controller', '--portcount', 2]
       v.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 1, '--device', 0, '--type', 'hdd', '--medium', diskfile]
     end
+    
   end
 
 ## setup 3 docker engines
@@ -161,10 +175,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       salt.bootstrap_options = "-P -c /tmp"
       salt.run_highstate = true
     end
+    # write correct resolve.conf
+    #config.vm.provision "shell", inline: $script, run: "always"
 
     node.vm.provider :virtualbox do |v|
       v.customize ["modifyvm", :id, "--memory", 512]
       v.customize ["modifyvm", :id, "--cpus", 1]
+      v.customize ['modifyvm', :id, '--natdnshostresolver1', 'off']
+      v.customize ['modifyvm', :id, '--natdnsproxy1', 'off']
+      v.customize ['modifyvm', :id, '--natdnspassdomain1', 'off']
 
       # add second disk for bricks
       diskfile = File.join(machine_folder, "srv-docker-01", 'disk2.vdi')
@@ -194,10 +213,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       salt.bootstrap_options = "-P -c /tmp"
       salt.run_highstate = true
     end
+    # write correct resolve.conf
+    #config.vm.provision "shell", inline: $script, run: "always"
 
     node.vm.provider :virtualbox do |v|
       v.customize ["modifyvm", :id, "--memory", 512]
       v.customize ["modifyvm", :id, "--cpus", 1]
+      v.customize ['modifyvm', :id, '--natdnshostresolver1', 'off']
+      v.customize ['modifyvm', :id, '--natdnsproxy1', 'off']
+      v.customize ['modifyvm', :id, '--natdnspassdomain1', 'off']
 
       # add second disk for bricks
       diskfile = File.join(machine_folder, "srv-docker-02", 'disk2.vdi')
@@ -227,10 +251,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       salt.bootstrap_options = "-P -c /tmp"
       salt.run_highstate = true
     end
+    # write correct resolve.conf
+    #config.vm.provision "shell", inline: $script, run: "always"
 
     node.vm.provider :virtualbox do |v|
       v.customize ["modifyvm", :id, "--memory", 512]
       v.customize ["modifyvm", :id, "--cpus", 1]
+      v.customize ['modifyvm', :id, '--natdnshostresolver1', 'off']
+      v.customize ['modifyvm', :id, '--natdnsproxy1', 'off']
+      v.customize ['modifyvm', :id, '--natdnspassdomain1', 'off']
 
       # add second disk for bricks
       diskfile = File.join(machine_folder, "srv-docker-03", 'disk2.vdi')
