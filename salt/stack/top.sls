@@ -20,3 +20,5 @@ base:
   'G@roles:convoy':
     - convoy
 
+  'G@roles:nomad':
+    - nomad
