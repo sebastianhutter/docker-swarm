@@ -20,7 +20,7 @@
         consul_prefix: {{vars.consul_prefix}}
 
 # reload the daemon
-reload:
+reload-registrator:
   cmd.run:
     - name: systemctl daemon-reload
     - onchanges:
