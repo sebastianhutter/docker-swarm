@@ -20,3 +20,9 @@ base:
   'G@roles:consul-master':
     - consul-master
     - dnsmasq
+
+  'G@roles:nomad':
+    - nomad
+
+  'G@roles:nomad-master':
+    - nomad-master
