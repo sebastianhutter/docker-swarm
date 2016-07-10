@@ -1,0 +1,64 @@
+#
+# this file contains global variables which are referenced in the state
+#
+
+#
+### local paths and users
+#
+
+# the directories in which we store the nomad configurations
+{% set nomad_config = salt['grains.get']('nomad:config_dir', salt['pillar.get']('nomad:config_dir','')) %}
+# persistent data directory
+{% set nomad_data =  salt['grains.get']('nomad:data_dir', salt['pillar.get']('nomad:data_dir','')) %}
+
+# name of the nomad user and group
+{% set nomad_user = salt['grains.get']('nomad:user', salt['pillar.get']('nomad:user','')) %}
+
+#
+### variables for installation
+#
+
+# get the nomad version to install
+{% set nomad_version = salt['grains.get']('nomad:version', salt['pillar.get']('nomad:version','')) %}
+
+# create the nomad archive name
+{% set nomad_archive = 'nomad_' + nomad_version|string + '_linux_' + salt['grains.get']('osarch') + '.zip' %}
+
+# create the download url for the nomad version
+{% set nomad_url = 'https://releases.hashicorp.com/nomad/' + nomad_version|string + '/' + nomad_archive %}
+
+
+# we keep different versions of nomad (for easy rollback etc). the downloaded and extracted nomad binary will
+# be renamed to nomad_<nomad_version>
+{% set nomad_bin = 'nomad_v' + nomad_version %}
+
+#
+### variables for the nomad.d templates
+#
+
+### nomad agent configuration
+{% set nomad_advertise_ip = salt['grains.get']('nomad:config:advertise_ip',salt['pillar.get']('nomad:config:advertise_ip',salt['grains.get']('ip4_interfaces:eth1:0'))) %}
+{% set nomad_advertise_port_rpc = salt['grains.get']('nomad:config:advertise_port_rpc',salt['pillar.get']('nomad:config:advertise_port_rpc','')) %}
+{% set nomad_advertise_port_http = salt['grains.get']('nomad:config:advertise_port_http',salt['pillar.get']('nomad:config:advertise_port_http','')) %}
+{% set nomad_advertise_port_serf = salt['grains.get']('nomad:config:advertise_port_serf',salt['pillar.get']('nomad:config:advertise_port_serf','')) %}
+
+{% set nomad_isserver = salt['grains.get']('nomad:config:is_server', salt['pillar.get']('nomad:config:is_server', false)) %}
+{% set nomad_bootstrap_expect = salt['grains.get']('nomad:config:bootstrap_expect', salt['pillar.get']('nomad:config:bootstrap_expect')) %}
+{% set nomad_consul_ip = salt['grains.get']('nomad:consul:ip',salt['pillar.get']('nomad:consul:ip','')) %}
+{% set nomad_consul_port = salt['grains.get']('nomad:consul:port',salt['pillar.get']('nomad:consul:port','')) %}
+
+
+### services and checks
+{% set nomad_services = salt['grains.get']('nomad:services', salt['pillar.get']('nomad:services',{})) %}
+{% set nomad_checks = salt['grains.get']('nomad:checks', salt['pillar.get']('nomad:checks',{})) %}
+
+#
+### variables for the systemd service file and environment
+#
+
+# name of the systemd service file
+{% set nomad_systemd_service = salt['grains.get']('nomad:systemd_service', salt['pillar.get']('nomad:systemd_service','/etc/systemd/system/nomad.service')) %}
+# get the basename of the service file -> used to control the service with service.running
+{% set nomad_systemd_service_name = nomad_systemd_service.split('/')|last %}
+# name of the environment file
+{% set nomad_systemd_environment = salt['grains.get']('nomad:systemd_environment', salt['pillar.get']('nomad:systemd_environment','/etc/default/nomad.env')) %}
